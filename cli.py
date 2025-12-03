@@ -27,9 +27,9 @@ def game_cpu()->None:
 
 def game_local_multiplayer()->None:
     winner = 0 # 1 for player 1 and 2 for player 2
-    clear_screen()
+    # clear_screen()
     while not winner:
-        clear_screen()
+        # clear_screen()
         print_board()
         print("\n")
         user_input = input(player_turn_str())
@@ -38,7 +38,12 @@ def game_local_multiplayer()->None:
         if fill_board(user_input):
             input("Mauvais numéro entré ou case déjà mise. Appuyez sur entrer pour continuer...")
             continue
-
+        winner = check_win()
+        print(winner)
+        if winner:
+            print(f"Le joueur {winner} à gagné!")
+        if check_draw():
+            print("Egualité...")
 
 def cli()->None:
     menu_input = menu()
@@ -46,4 +51,3 @@ def cli()->None:
         game_cpu()
     elif menu_input == "2":
         game_local_multiplayer()
-    
