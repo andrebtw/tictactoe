@@ -9,8 +9,22 @@ def quit_game()->None:
     game.pygame_close()
     exit(0)
 
-def mouse_click_pos()->int:
-    pass
+def mouse_click_pos(event)->int:
+    x, y = event.pos
+    win_w, win_h = game.screen.get_size()
+    x = x // (win_w / game.LOGICAL_WIDTH)
+    y = y // (win_h / game.LOGICAL_HEIGHT)
+
+    cell_w = game.LOGICAL_WIDTH  / 3
+    cell_h = game.LOGICAL_HEIGHT / 3
+
+    col = int(x // cell_w)
+    row = int(y // cell_h)
+
+    if not (0 <= row < 3 and 0 <= col < 3):
+        return None
+
+    return row * 3 + col + 1
 
 def gui()->None:
     main_menu = Menu("Main menu", ["Play", "Settings", "Quit"], False)
@@ -46,7 +60,7 @@ def gui()->None:
             
             elif game.state == "multiplayer":
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    fill_board(mouse_click_pos())
+                    fill_board(mouse_click_pos(event))
 
         game.render.fill((0, 0, 0))
         if game.state == "main_menu":

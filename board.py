@@ -29,6 +29,7 @@ def fill_board(pos:str)->int:
     global player_count, board
 
     pos = int(pos)
+    print(pos)
     try:
         pos = int(pos)
         if pos < 1 or pos > 9:
