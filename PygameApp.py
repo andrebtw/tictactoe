@@ -33,3 +33,6 @@ class PygameApp:
     def add_font(self, font_name:str, font:str, font_size:int):
         self.fonts.update({font_name: pygame.font.Font( \
             os.path.join(self.base_dir,"fonts", font), font_size)})
+    
+    def pygame_close(self)->None:
+        pygame.quit()
