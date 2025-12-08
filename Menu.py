@@ -29,7 +29,8 @@ class Menu:
     def draw_menu(self, surface):
         for i, menu in enumerate(self.text_surface):
             surface.blit(self.text_surface[i], self.text_rect[i])
-        
+
+
     def check_menu_click(self, event):
         # print("loop down")
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

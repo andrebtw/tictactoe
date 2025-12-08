@@ -79,3 +79,13 @@ def check_draw()->int:
             if board[x][y] == ".":
                 return 0
     return 1
+
+def game_restart()->None:
+    global board, player_count
+
+    board = [
+        [".", ".", "."],
+        [".", ".", "."],
+        [".", ".", "."],
+    ]
+    player_count = 0

@@ -13,6 +13,7 @@ class PygameApp:
         self.base_dir = os.path.dirname(__file__)
         self.fonts = {}
         self.state = ""
+        self.images = {}
 
     def event_check(self):
         for event in pygame.event.get():
@@ -21,6 +22,9 @@ class PygameApp:
             if event:
                 return event
     
+    def change_res(self, x, y):
+        self.screen = pygame.display.set_mode((x, y))
+
     def pygame_draw(self):
         win_w, win_h = self.screen.get_size()
         # print(win_w, win_h)
@@ -36,3 +40,19 @@ class PygameApp:
     
     def pygame_close(self)->None:
         pygame.quit()
+    
+    def load_image(self, img_name:str, img_path:str, img_width, img_height):
+        self.images.update({img_name: pygame.image.load(img_path).convert_alpha()})
+        self.images[img_name]  = pygame.transform.smoothscale(self.images[img_name], (img_width, img_height))
+    
+    def draw_image(self, img_name, x, y):
+        self.render.blit(self.images[img_name], (x, y))
+
+    def draw_text(self, text, surface, font, x, y, color, center) -> None:
+        surf = font.render(text, True, color)
+        rect = surf.get_rect()
+        if center:
+            rect.center = (x, y)
+        else:
+            rect.topleft = (x, y)
+        surface.blit(surf, rect)
