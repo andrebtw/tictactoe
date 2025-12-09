@@ -73,7 +73,7 @@ def singleplayer_game_render(board)->None:
         game.state = "win"
         print(f"L'ordinateur a gagné!")
         draw_finished(winner)
-    if draw:
+    elif draw:
         game.state = "draw"
         print("Egualite...")
         draw_draw()

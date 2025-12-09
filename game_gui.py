@@ -30,7 +30,7 @@ def mouse_click_pos(event)->int:
 
 def gui()->None:
     main_menu = Menu("Main menu", ["Play", "Settings", "Quit"], False)
-    player_menu = Menu("Player menu", ["Singleplayer", "Multiplayer"], False)
+    player_menu = Menu("Player menu", ["Singleplayer", "Multiplayer"], True)
     settings_menu = Menu("Settings menu", [
         "360p (640x360)",
         "720p (1280x720)",
@@ -46,6 +46,7 @@ def gui()->None:
 
     game.load_image("X", "./pics/x.png", 350, 350)
     game.load_image("O", "./pics/o.png", 350, 350)
+    game.load_image("back", "./pics/back.png", 125, 185)
 
     game.state = "main_menu"
 
@@ -67,6 +68,8 @@ def gui()->None:
                         game.change_res(2560, 1440)
                     elif click == "4K (3840x2160)":
                         game.change_res(3840, 2160)
+                    elif click == "back":
+                        game.state = "main_menu"
 
             if game.state == "main_menu":
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -85,15 +88,18 @@ def gui()->None:
                         game.state = "singleplayer"
                     elif click == "Multiplayer":
                         game.state = "multiplayer"
+                    elif click == "back":
+                        game.state = "main_menu"
 
             elif game.state == "singleplayer":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     place = mouse_click_pos(event)
-                    board.fill_board(place)
-                    while True:
-                        pos = random.randint(1, 9)
-                        if board.fill_board(pos) == 0:
-                            break
+                    if not board.check_win() or not board.check_draw():
+                        board.fill_board(place)
+                        while True:
+                            pos = random.randint(1, 9)
+                            if board.fill_board(pos) == 0:
+                                break
             
             elif game.state == "multiplayer":
                 if event.type == pygame.MOUSEBUTTONDOWN:

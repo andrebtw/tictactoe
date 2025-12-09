@@ -8,6 +8,7 @@ class Menu:
         self.return_button = back_button
         self.text_surface = []
         self.text_rect = []
+        self.back_rect = None
         
     def create_menu(self, surface, font, w, h):
         count = len(self.menu_content)
@@ -29,6 +30,12 @@ class Menu:
     def draw_menu(self, surface):
         for i, menu in enumerate(self.text_surface):
             surface.blit(self.text_surface[i], self.text_rect[i])
+        
+        if self.return_button:
+            img = game.images["back"]
+            rect = img.get_rect(topleft=(40, 40))
+            self.back_rect = rect
+            surface.blit(img, rect)
 
 
     def check_menu_click(self, event):
@@ -43,4 +50,10 @@ class Menu:
                 if self.text_rect[i].collidepoint((x, y)):
                     print(f"{self.menu_content[i]} clicked")
                     return self.menu_content[i]
+
+            if self.return_button:
+                if self.back_rect.collidepoint((x, y)):
+                    print("back clicked")
+                    return "back"
+
         return None
